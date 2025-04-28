@@ -12,16 +12,12 @@ app.use((req: Request, res: Response) => {
     res.status(404).json({ error: "Route not found"})
 });
 
-async function startServer(){
-    try{
-        await initDB();
+initDB()
+    .then(() => {
         app.listen(port, () => {
             console.log(`server is running at http://localhost:${port}`);
         });
-    }
-    catch(error){
-        console.error("server error because of database error",error)
-    }
-}
-
-startServer();
+    })
+    .catch((error) => {
+        console.error("server error because of database error",error);
+    });

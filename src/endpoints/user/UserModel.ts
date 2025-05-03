@@ -41,7 +41,10 @@ UserSchema.pre('findOneAndUpdate', async function (next) {
     if (!userInDatabase) throw new Error("User not in Database");
   
     const isSamePassword = await bcryptjs.compare(newPassword, userInDatabase.password);
-    if (isSamePassword) throw new Error("Change your password");
+    if (isSamePassword) {
+        delete update.password;
+        return next();
+    }
 
     update.password = await bcryptjs.hash(newPassword, 10);
     return next();

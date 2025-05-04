@@ -1,3 +1,4 @@
+import { HttpError } from "../../errors/HttpError";
 import { createUser, getAllUsers, getUserByUserID, deleteUserByUserID, updateUser } from "./UserService";
 import express, { Request, Response } from 'express';
 
@@ -8,7 +9,12 @@ router.post("/", async (req: Request, res: Response) => {
 		const user = await createUser(req.body);
         res.status(201).json(user); 
 	} catch (error) {
-		res.status(400).json({error: 'error creating a user'});
+		if(error instanceof HttpError){
+			res.status(error.status).json({error: error.message});
+		}
+		else{
+			res.status(500).json({error: 'An unkown error occured'});	
+		}
 	}
 });
 
@@ -18,7 +24,12 @@ router.get("/", async (req: Request, res: Response) =>{
 		res.status(200).json(users);
 	}
 	catch(error){
-		res.status(400).json({error: 'error getting all users'});
+		if(error instanceof HttpError){
+			res.status(error.status).json({error: error.message});
+		}
+		else{
+			res.status(500).json({error: 'An unkown error occured'});
+		}
 	}
 });
 
@@ -28,11 +39,11 @@ router.get('/:userID', async (req: Request, res: Response) =>{
 		res.status(200).json(user);	
 	}
 	catch(error){
-		if(error instanceof Error){
-			res.status(404).json({error: error.message});	
+		if(error instanceof HttpError){
+			res.status(error.status).json({error: error.message});
 		}
 		else{
-			res.status(500).json({error: 'Unkown error occured'});
+			res.status(500).json({error: 'An unkown error occured'});	
 		}
 	}
 });
@@ -43,8 +54,8 @@ router.delete('/:userID', async (req: Request, res: Response) =>{
 		res.sendStatus(204);
 	}
 	catch(error){
-		if(error instanceof Error){
-			res.status(404).json({error: error.message});
+		if(error instanceof HttpError){
+			res.status(error.status).json({error: error.message});
 		}
 		else{
 			res.status(500).json({error: 'Unkown error occured'});
@@ -58,8 +69,8 @@ router.put('/:userID', async(req: Request, res: Response) => {
 		res.status(200).json(modifiedUser);
 	}
 	catch(error) {
-		if(error instanceof Error) {
-			res.status(404).json( {error: error.message})
+		if(error instanceof HttpError) {
+			res.status(error.status).json( {error: error.message})
 		}
 		else{
 			res.status(500).json({error: 'Unkown error occured'});

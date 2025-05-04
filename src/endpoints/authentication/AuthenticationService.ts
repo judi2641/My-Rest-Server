@@ -2,8 +2,7 @@ import { getUserByUserID } from "../users/UserService";
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { HttpError } from "../../errors/HttpError";
-
-const jwtKey = 'my_secret_key';
+import config from 'config';
 
 
 /**
@@ -23,8 +22,9 @@ export async function authenticate(userID: string, password: string){
     const token = jwt.sign(
         {
             userID: user.userID,
+            isAdministrator: user.isAdministrator
         },
-        jwtKey,
+        config.get<string>('session.tokenKey'),
         {
             algorithm: 'HS256',
             expiresIn: '1h'

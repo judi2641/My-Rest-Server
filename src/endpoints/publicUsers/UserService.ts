@@ -1,6 +1,7 @@
 import UserModel from './UserModel';
 import bcryptjs from 'bcryptjs';
 import { HttpError } from '../../errors/HttpError';
+import { IUserDocument } from './UserTypes';
 
 export async function createUser(userData: {
     userID: string;
@@ -8,7 +9,7 @@ export async function createUser(userData: {
     lastName?: string;
     password: string;
     isAdministrator?: Boolean;
-}){
+}):Promise<IUserDocument>{
     const user = new UserModel(userData);
     return await user.save();
 };
@@ -21,7 +22,7 @@ export async function getAllUsers(){
  * throws an error if the user is not in the database
  * @returns user when the user is found
  */
-export async function getUserByUserID(userID: string){
+export async function getUserByUserID(userID: string): Promise<IUserDocument>{
     const user = await UserModel.findOne( {userID} );
     if(!user){
         console.log(`user with userID: ${userID} not found`);
@@ -52,7 +53,7 @@ export async function updateUser(userID: string, userData: {
     lastName?: string;
     password?: string;
     isAdministrator?: Boolean;
-}){
+}):Promise<IUserDocument> {
     if(userData.userID && userID != userData.userID){
         console.log(`request to change userID of user:${userID} in userID: ${userData.userID} -- not allowed`);
         throw new HttpError(400, "do not change the userID");
@@ -70,7 +71,7 @@ export async function updateUser(userID: string, userData: {
     return await userInDatabase.save();
 }
 
-export async function initAdministrator(){
+export async function initAdministrator():Promise<void>{
     const admin = await UserModel.findOne({ isAdministrator: true });
     if(admin){
         console.log("at least one admin already exist");

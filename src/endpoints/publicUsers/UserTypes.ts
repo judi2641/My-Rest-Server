@@ -1,3 +1,5 @@
+import { Document } from "mongoose";
+
 export interface IUser{
     userID: string;
     firstName?: string;

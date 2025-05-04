@@ -55,18 +55,11 @@ router.delete('/:userID', async (req: Request, res: Response) =>{
 router.put('/:userID', async(req: Request, res: Response) => {
 	try{
 		const modifiedUser = await updateUser(req.params.userID, req.body);
-		if(modifiedUser){
-			res.status(200).json(modifiedUser);
-		}
-		else{
-			res.status(404).json({error: `Error: Could not find User: ${req.params.userID}`});
-		}
+		res.status(200).json(modifiedUser);
 	}
 	catch(error) {
-		//da bei findOneAndUpdate viele verschiedene Fehler autreten können, hier errormessage ausgeben
-		//dafür muss error vom typ Error sein
 		if(error instanceof Error) {
-			res.status(400).json( {error: error.message})
+			res.status(404).json( {error: error.message})
 		}
 		else{
 			res.status(500).json({error: 'Unkown error occured'});

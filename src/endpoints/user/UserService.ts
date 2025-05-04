@@ -42,10 +42,21 @@ export async function updateUser(userID: string, userData: {
     password?: string;
     isAdministrator?: Boolean;
 }){
-    return await UserModel.findOneAndUpdate( {userID} ,userData,{
-        new: true, // returns object after update
-        runValidators: true, // validators are checked
-    });
+    if(userData.userID && userID != userData.userID){
+        console.log(`request to change userID of user:${userID} in userID: ${userData.userID} -- not allowed`);
+        throw new Error("do not change the userID");
+    }
+    const userInDatabase = await getUserByUserID(userID);
+
+    if(userData.password){
+        const isSamePassword = await bcryptjs.compare(userData.password, userInDatabase.password);
+        if(isSamePassword){
+            console.log("the new password is the same as the passwort in database -- skipping new password hash");
+            delete userData.password;
+        }
+    }
+    Object.assign(userInDatabase,userData);
+    return await userInDatabase.save();
 }
 
 export async function initAdministrator(){

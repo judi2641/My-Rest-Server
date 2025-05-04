@@ -1,7 +1,7 @@
 import UserModel from './UserModel';
 import bcryptjs from 'bcryptjs';
 import { HttpError } from '../../errors/HttpError';
-import { IUserDocument } from './UserTypes';
+import { IUserDocument } from './UserModel';
 
 export async function createUser(userData: {
     userID: string;

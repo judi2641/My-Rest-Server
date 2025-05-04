@@ -25,15 +25,15 @@ router.get("/", async (req: Request, res: Response) =>{
 router.get('/:userID', async (req: Request, res: Response) =>{
 	try{
 		const user = await getUserByUserID(req.params.userID);
-		if(user){
-			res.status(200).json(user);	
-		}
-		else{
-			res.status(404).json({error: `Error: Could not find User: ${req.params.userID}`});
-		}
+		res.status(200).json(user);	
 	}
 	catch(error){
-		res.status(400).json({error: 'error getting user by id'});
+		if(error instanceof Error){
+			res.status(400).json({error: 'error getting user by id'});	
+		}
+		else{
+			res.status(500).json({error: 'Unkown error occured'});
+		}
 	}
 });
 

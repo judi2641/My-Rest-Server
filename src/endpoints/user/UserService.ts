@@ -16,7 +16,13 @@ export async function getAllUsers(){
 };
 
 export async function getUserByUserID(userID: string){
-    return await UserModel.findOne( {userID} );
+    const user = await UserModel.findOne( {userID} );
+    if(!user){
+        console.log(`user with userID: ${userID} not found`);
+        throw new Error("User not found");
+    }
+    console.log(`user with userID: ${userID} found`);
+    return user;
 };
 
 export async function deleteUserByUserID(userID: string){

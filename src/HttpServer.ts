@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { initDB } from './database/db';
 import PublicUserRoute from './endpoints/user/PublicUserRoute';
+import { initAdministrator } from './endpoints/user/UserService';
 
 
 const app = express();
@@ -13,7 +14,8 @@ app.use((req: Request, res: Response) => {
 });
 
 initDB()
-    .then(() => {
+    .then(async () => {
+        await initAdministrator();
         app.listen(port, () => {
             console.log(`server is running at http://localhost:${port}`);
         });

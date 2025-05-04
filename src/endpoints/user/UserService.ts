@@ -36,4 +36,22 @@ export async function updateUser(userID: string, userData: {
     });
 }
 
+export async function initAdministrator(){
+    const admin = await UserModel.findOne({ isAdministrator: true });
+    if(admin){
+        console.log("at least one admin already exist");
+        return;
+    }
+    else{
+        console.log("no admin exist. creating a default admin");
+        const defaultAdmin = new UserModel({
+            userID: "admin",
+            password: "password",
+            isAdministrator: true
+        });
+        defaultAdmin.save();
+        console.log("created default admin with userID: 'admin' and password 'password'")
+    }
+}
+
 

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcryptjs from 'bcryptjs';
-import { IUserDocument, TransferUser } from "./UserTypes";
+import { IUser, IUserDocument, TransferUser } from "./UserTypes";
 
 const UserSchema = new mongoose.Schema<IUserDocument>({
     userID: {type: String, required: true, unique: true, immutable: true},
@@ -19,13 +19,13 @@ UserSchema.methods.toSafeJSON = function (): TransferUser {
     return user;
   };
 
-UserSchema.set('toJSON', {
-    transform: function(doc,ret){
-        ret.id = ret._id;
-        delete ret._id;
-        delete ret.__v;
-    }
-});
+UserSchema.methods.toJSON = function (): IUser{
+    const user = this.toObject();
+    user.id = user._id;
+    delete user._id;
+    delete user.__v;
+    return user;
+}
 
 UserSchema.pre('save', async function() {
     //document middleware untersützt save() methode

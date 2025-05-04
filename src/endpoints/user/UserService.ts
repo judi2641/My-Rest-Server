@@ -46,7 +46,7 @@ export async function initAdministrator(){
         console.log("no admin exist. creating a default admin");
         const defaultAdmin = new UserModel({
             userID: "admin",
-            password: "password",
+            password: "123",
             isAdministrator: true
         });
         defaultAdmin.save();

@@ -1,5 +1,4 @@
-import UserModel from "../publicUsers/UserModel";
-import { getUserByUserID } from "../publicUsers/UserService";
+import { getUserByUserID } from "../users/UserService";
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { HttpError } from "../../errors/HttpError";
@@ -9,7 +8,7 @@ const jwtKey = 'my_secret_key';
 
 /**
  * throws error if authentication
- * @returns token if authentication was sucessfull
+ * @returns safeUser object and token if authentication was sucessfull
  */
 export async function authenticate(userID: string, password: string){
     const user = await getUserByUserID(userID);
@@ -32,7 +31,5 @@ export async function authenticate(userID: string, password: string){
         }
     )
     const safeUser = user.toSafeJSON();
-    safeUser.accessToken = token;
     return {safeUser, token};
 };
-

@@ -15,6 +15,10 @@ export async function getAllUsers(){
     return await UserModel.find();
 };
 
+/**
+ * throws an error if the user is not in the database
+ * @returns user when the user is found
+ */
 export async function getUserByUserID(userID: string){
     const user = await UserModel.findOne( {userID} );
     if(!user){
@@ -25,6 +29,9 @@ export async function getUserByUserID(userID: string){
     return user;
 };
 
+/**
+ * throws an error if user not found in database
+ */
 export async function deleteUserByUserID(userID: string){
     const user = await UserModel.findOneAndDelete( {userID} );
     if(!user){
@@ -32,9 +39,11 @@ export async function deleteUserByUserID(userID: string){
         throw new Error("User not found");
     }
     console.log(`user with userID:${userID} found and deleted`);
-    return user;
 };
 
+/**
+ * throws error if you want to change the userID
+ */
 export async function updateUser(userID: string, userData: {
     userID?: string;
     firstName?: string;

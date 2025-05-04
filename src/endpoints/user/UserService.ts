@@ -1,5 +1,6 @@
 import UserModel from './UserModel';
 import bcryptjs from 'bcryptjs';
+import { HttpError } from '../../errors/HttpError';
 
 export async function createUser(userData: {
     userID: string;
@@ -24,7 +25,7 @@ export async function getUserByUserID(userID: string){
     const user = await UserModel.findOne( {userID} );
     if(!user){
         console.log(`user with userID: ${userID} not found`);
-        throw new Error("User not found");
+        throw new HttpError(404, "User not found");
     }
     console.log(`user with userID:${userID} found`);
     return user;
@@ -37,7 +38,7 @@ export async function deleteUserByUserID(userID: string){
     const user = await UserModel.findOneAndDelete( {userID} );
     if(!user){
         console.log(`user with userID:${userID} not found`);
-        throw new Error("User not found");
+        throw new HttpError(404, "User not found");
     }
     console.log(`user with userID:${userID} found and deleted`);
 };
@@ -54,7 +55,7 @@ export async function updateUser(userID: string, userData: {
 }){
     if(userData.userID && userID != userData.userID){
         console.log(`request to change userID of user:${userID} in userID: ${userData.userID} -- not allowed`);
-        throw new Error("do not change the userID");
+        throw new HttpError(400, "do not change the userID");
     }
     const userInDatabase = await getUserByUserID(userID);
 

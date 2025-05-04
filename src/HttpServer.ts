@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
 import { initDB } from './database/db';
-import PublicUserRoute from './endpoints/publicUsers/PublicUserRoute';
+import PublicUserRoute from './endpoints/users/PublicUserRoute';
 import AuthenticationRoute from './endpoints/authentication/AuthenticationRoute';
-import { initAdministrator } from './endpoints/publicUsers/UserService';
+import { initAdministrator } from './endpoints/users/UserService';
 
 
 const app = express();

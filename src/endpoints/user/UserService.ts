@@ -1,4 +1,5 @@
-import UserModel from "./UserModel";
+import UserModel from './UserModel';
+import bcryptjs from 'bcryptjs';
 
 export async function createUser(userData: {
     userID: string;

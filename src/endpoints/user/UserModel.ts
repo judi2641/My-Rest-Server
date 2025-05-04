@@ -21,35 +21,11 @@ UserSchema.pre('save', async function() {
     //document middleware untersützt save() methode
     //man kann mit .this auf das aktuelle document zugreifen
     if(this.isModified('password')){
+        console.log('password is being updated -- new password hash');
         this.password = await bcryptjs.hash(this.password,10);
     }
 });
 
-UserSchema.pre('findOneAndUpdate', async function (next) {
-    //'findOneAndUpdte wird nicht von document mitddleware untersützt'
-    //mit .this bekommt man nur die query
-    //getUpdate gibt die änderung als JSON object zurück
-    const update = this.getUpdate() as any;
-
-    const newUserID = update.userID;
-    if(newUserID) throw new Error("Do not change the UserID");
-
-    const newPassword = update.password;
-    if (!newPassword) return next();
-  
-    const userInDatabase = await this.model.findOne(this.getQuery());
-    if (!userInDatabase) throw new Error("User not in Database");
-  
-    const isSamePassword = await bcryptjs.compare(newPassword, userInDatabase.password);
-    if (isSamePassword) {
-        delete update.password;
-        return next();
-    }
-
-    update.password = await bcryptjs.hash(newPassword, 10);
-    return next();
-  });
-  
 delete mongoose.models.User;
 const UserModel = mongoose.model('User', UserSchema);
 

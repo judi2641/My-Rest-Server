@@ -21,12 +21,18 @@ export async function getUserByUserID(userID: string){
         console.log(`user with userID: ${userID} not found`);
         throw new Error("User not found");
     }
-    console.log(`user with userID: ${userID} found`);
+    console.log(`user with userID:${userID} found`);
     return user;
 };
 
 export async function deleteUserByUserID(userID: string){
-    return await UserModel.findOneAndDelete( {userID} );
+    const user = await UserModel.findOneAndDelete( {userID} );
+    if(!user){
+        console.log(`user with userID:${userID} not found`);
+        throw new Error("User not found");
+    }
+    console.log(`user with userID:${userID} found and deleted`);
+    return user;
 };
 
 export async function updateUser(userID: string, userData: {

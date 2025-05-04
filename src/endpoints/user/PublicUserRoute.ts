@@ -29,7 +29,7 @@ router.get('/:userID', async (req: Request, res: Response) =>{
 	}
 	catch(error){
 		if(error instanceof Error){
-			res.status(400).json({error: 'error getting user by id'});	
+			res.status(404).json({error: error.message});	
 		}
 		else{
 			res.status(500).json({error: 'Unkown error occured'});
@@ -40,15 +40,15 @@ router.get('/:userID', async (req: Request, res: Response) =>{
 router.delete('/:userID', async (req: Request, res: Response) =>{
 	try{
 		const deleteUser = await deleteUserByUserID(req.params.userID);
-		if(deleteUser){
-			res.sendStatus(204);
-		}
-		else{
-			res.status(404).json({error: `Error: Could not find User: ${req.params.userID}`});
-		}
+		res.sendStatus(204);
 	}
 	catch(error){
-		res.status(400).json({error: 'error deleting user'})
+		if(error instanceof Error){
+			res.status(404).json({error: error.message});
+		}
+		else{
+			res.status(500).json({error: 'Unkown error occured'});
+		}
 	}
 });
 

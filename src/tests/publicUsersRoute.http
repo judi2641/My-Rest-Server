@@ -40,8 +40,8 @@ PUT http://localhost:80/api/publicUsers/juliusdittrich
 Content-Type: application/json
 
 {   
-    "isAdministrator": "false",
-    "password": "passwordddd",
+    "userID": "marlow",
+    "isAdministrator": "true",
     "blabla": "sdg"
 }
 

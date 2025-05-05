@@ -4,15 +4,21 @@ import { HttpError } from '../../errors/HttpError';
 import { IUserDocument } from './UserModel';
 
 export async function createUser(userData: {
-    userID: string;
+    userID?: string;
     firstName?: string;
     lastName?: string;
     password: string;
     isAdministrator?: Boolean;
 }):Promise<IUserDocument>{
-    const user = new UserModel(userData);
-    return await user.save();
-};
+    try{
+        const user = new UserModel(userData);
+        return await user.save();
+    }
+    catch(error){
+        console.error("Error creating user:", error);
+        throw new HttpError(400, "Failed to create user");
+    }
+}
 
 export async function getAllUsers(){
     return await UserModel.find();

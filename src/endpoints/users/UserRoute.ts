@@ -1,4 +1,4 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import { isAuthenticated } from '../../utils/isAuthenticated';
 import { isAdministrator } from '../../utils/isAdministrator';
 import { getAllUsers, createUser, getUserByUserID, deleteUserByUserID, updateUser } from './UserService';

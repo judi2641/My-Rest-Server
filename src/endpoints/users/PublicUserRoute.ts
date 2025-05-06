@@ -50,7 +50,7 @@ router.get('/:userID', async (req: Request, res: Response) =>{
 
 router.delete('/:userID', async (req: Request, res: Response) =>{
 	try{
-		const deleteUser = await deleteUserByUserID(req.params.userID);
+		await deleteUserByUserID(req.params.userID);
 		res.sendStatus(204);
 	}
 	catch(error){

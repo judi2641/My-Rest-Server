@@ -8,7 +8,7 @@ export async function createUser(userData: {
     firstName?: string;
     lastName?: string;
     password: string;
-    isAdministrator?: Boolean;
+    isAdministrator?: boolean;
 }):Promise<IUserDocument>{
     try{
         const user = new UserModel(userData);
@@ -58,7 +58,7 @@ export async function updateUser(userID: string, userData: {
     firstName?: string;
     lastName?: string;
     password?: string;
-    isAdministrator?: Boolean;
+    isAdministrator?: boolean;
 }):Promise<IUserDocument> {
     if(userData.userID && userID != userData.userID){
         console.log(`request to change userID of user:${userID} in userID: ${userData.userID} -- not allowed`);

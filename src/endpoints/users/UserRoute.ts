@@ -12,7 +12,6 @@ router.get("/",isAuthenticated, isAdministrator, async (req: Request, res: Respo
         const safeUser = user.toSafeJSON();
         return safeUser;
     })
-    //muss man immer token mitschicken?
     const token = (req as any).token;
     res.setHeader('Authorization', `Bearer ${token}`);
     res.status(200).json(safeUsers);
@@ -59,7 +58,7 @@ router.post('/', isAuthenticated, isAdministrator, async(req: Request, res: Resp
 
 router.delete('/:userID', isAuthenticated, isAdministrator, async(req: Request, res: Response) => {
     try{
-        const deleteUser = await deleteUserByUserID(req.params.userID);
+        await deleteUserByUserID(req.params.userID);
         res.sendStatus(204);
     }
     catch(error){

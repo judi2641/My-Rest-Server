@@ -65,7 +65,7 @@ Authorization: {{adminToken}}
 // Lege einen Studiengang an
 ###
 # @name createDegreeCourseRequest
-POST http://localhost/api/degreeCourses
+POST http://127.0.0.1/api/degreeCourses
 Authorization: {{adminToken}}
 Content-Type: application/json
 
@@ -100,8 +100,10 @@ Content-Type: application/json
 }
 
 ### Auflisten der Studiengänge einer bestimmten Hochschule
-GET http://localhost/api/degreeCourses/dd=Beuth HS
+GET http://localhost/api/degreeCoursesss?universityShortName=Beuth HS
 Authorization: {{adminToken}}
+
+
 
 ### Lösche den angelegten Studiengang
 DELETE http://localhost/api/degreeCourses/{{degreeCourseID}}

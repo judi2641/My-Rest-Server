@@ -76,9 +76,7 @@ router.put('/:degreeCourseID', isAuthenticated, isAdministrator, async (req: Req
 
 router.delete('/:degreeCourseID', isAuthenticated, isAdministrator, async (req: Request, res: Response) => {
     try{
-        console.log("bin in route und versuche kurs zu löschen");
         await deleteDegreeCourse(req.params.degreeCourseID);
-        console.log("hab gelöscht und schicke response");
         res.sendStatus(204);
     }
     catch(error){

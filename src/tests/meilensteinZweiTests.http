@@ -86,7 +86,7 @@ http://localhost/api/degreeCourses
 Authorization: {{adminToken}}
 
 ### Abrufen von dem angelegten Studiengang
-http://localhost/api/degreeCourses/681a182a2908bb4b106a32a9
+http://localhost/api/degreeCourses/{{degreeCourseID}}
 Authorization: {{adminToken}}
 
 
@@ -100,13 +100,11 @@ Content-Type: application/json
 }
 
 ### Auflisten der Studiengänge einer bestimmten Hochschule
-GET http://localhost/api/degreeCoursesss?universityShortName=Beuth HS
+GET http://localhost/api/degreeCourses?universityShortName=Beuth HS
 Authorization: {{adminToken}}
 
-
-
 ### Lösche den angelegten Studiengang
-DELETE http://localhost/api/degreeCourses/681a18332908bb4b106a32b1
+DELETE http://localhost/api/degreeCourses/{{degreeCourseID}}
 Authorization: {{adminToken}}
 
 ### Lösche den User manfred

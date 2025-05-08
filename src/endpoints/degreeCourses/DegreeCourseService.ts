@@ -1,5 +1,5 @@
 import { HttpError } from "../../errors/HttpError";
-import DegreeCourseModel from "./DegreeCourseModel";
+import DegreeCourseModel, { IDegreeCourseDocument } from "./DegreeCourseModel";
 
 export async function createDegreeCourse(DegreeCourseData: {
     universityName: string;
@@ -8,17 +8,17 @@ export async function createDegreeCourse(DegreeCourseData: {
     departmentShortName: string;
     name: string;
     shortName: string;
-}){
+}):Promise<IDegreeCourseDocument>{
     
     const degreeCourse = new DegreeCourseModel(DegreeCourseData);
     return await degreeCourse.save();
 };
 
-export async function getAllDegreeCourses(){
+export async function getAllDegreeCourses():Promise<IDegreeCourseDocument[]>{
     return await DegreeCourseModel.find();
 };
 
-export async function getDegreeCourseByID(degreeCourseID: string){
+export async function getDegreeCourseByID(degreeCourseID: string):Promise<IDegreeCourseDocument>{
     const degreeCourse = await DegreeCourseModel.findById(degreeCourseID);
     if(!degreeCourse){
         console.log(`course with id ${degreeCourseID} not found`);
@@ -30,7 +30,7 @@ export async function getDegreeCourseByID(degreeCourseID: string){
     }
 }
 
-export async function deleteDegreeCourse(degreeCourseID: string){
+export async function deleteDegreeCourse(degreeCourseID: string):Promise<void>{
     const degreeCourse = await DegreeCourseModel.findOneAndDelete( {degreeCourseID} );
     if(!degreeCourse){
         console.log(`course with id ${degreeCourseID} not found`);
@@ -48,7 +48,7 @@ export async function updateDegreeCourse(degreeCourseID: string, degereCourseDat
     departmentShortName?: string;
     name?: string;
     shortName?: string;
-}){
+}):Promise<IDegreeCourseDocument>{
     const degreeCouseInDatabase = await getDegreeCourseByID(degreeCourseID);
     Object.assign(degreeCouseInDatabase,degereCourseData);
     return await degreeCouseInDatabase.save();

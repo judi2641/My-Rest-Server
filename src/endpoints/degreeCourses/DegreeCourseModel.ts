@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Document }from "mongoose";
 
 const DegreeCourseSchema = new mongoose.Schema({
     universityName: { type: String, required: true },
@@ -9,6 +9,15 @@ const DegreeCourseSchema = new mongoose.Schema({
     shortName: { type: String, required: true },
 });
 
+export interface IDegreeCourseDocument extends Document{
+    universityName: string;
+    universityShortName: string;
+    departmentName: string;
+    departmentShortName: string;
+    name: string;
+    shortName: string;
+}
+
 DegreeCourseSchema.methods.toJSON = function (){
     const degreeCourse = this.toObject();
     degreeCourse.id = degreeCourse._id;
@@ -16,5 +25,5 @@ DegreeCourseSchema.methods.toJSON = function (){
     delete degreeCourse.__v;
     return degreeCourse;
 }
-const DegreeCourseModel = mongoose.model('DegreeCourse', DegreeCourseSchema);
+const DegreeCourseModel = mongoose.model<IDegreeCourseDocument>('DegreeCourse', DegreeCourseSchema);
 export default DegreeCourseModel;

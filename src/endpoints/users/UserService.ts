@@ -20,7 +20,7 @@ export async function createUser(userData: {
     }
 }
 
-export async function getAllUsers(){
+export async function getAllUsers():Promise<IUserDocument[]>{
     return await UserModel.find();
 };
 
@@ -41,7 +41,7 @@ export async function getUserByUserID(userID: string): Promise<IUserDocument>{
 /**
  * throws an error if user not found in database
  */
-export async function deleteUserByUserID(userID: string){
+export async function deleteUserByUserID(userID: string):Promise<void>{
     const user = await UserModel.findOneAndDelete( {userID} );
     if(!user){
         console.log(`user with userID:${userID} not found`);

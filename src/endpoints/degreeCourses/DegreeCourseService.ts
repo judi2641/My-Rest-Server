@@ -31,7 +31,7 @@ export async function getDegreeCourseByID(degreeCourseID: string):Promise<IDegre
 }
 
 export async function deleteDegreeCourse(degreeCourseID: string):Promise<void>{
-    const degreeCourse = await DegreeCourseModel.findOneAndDelete( {degreeCourseID} );
+    const degreeCourse = await DegreeCourseModel.findOneAndDelete({ _id: degreeCourseID });
     if(!degreeCourse){
         console.log(`course with id ${degreeCourseID} not found`);
         throw new HttpError(404, 'course not found');

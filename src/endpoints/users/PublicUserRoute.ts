@@ -9,6 +9,7 @@ router.post("/", async (req: Request, res: Response) => {
 		const user = await createUser(req.body);
         res.status(201).json(user); 
 	} catch (error) {
+		console.log(error);
 		if(error instanceof HttpError){
 			res.status(error.status).json({error: error.message});
 		}
@@ -24,6 +25,7 @@ router.get("/", async (req: Request, res: Response) =>{
 		res.status(200).json(users);
 	}
 	catch(error){
+		console.log(error);
 		if(error instanceof HttpError){
 			res.status(error.status).json({error: error.message});
 		}
@@ -39,6 +41,7 @@ router.get('/:userID', async (req: Request, res: Response) =>{
 		res.status(200).json(user);	
 	}
 	catch(error){
+		console.log(error);
 		if(error instanceof HttpError){
 			res.status(error.status).json({error: error.message});
 		}
@@ -54,6 +57,7 @@ router.delete('/:userID', async (req: Request, res: Response) =>{
 		res.sendStatus(204);
 	}
 	catch(error){
+		console.log(error);
 		if(error instanceof HttpError){
 			res.status(error.status).json({error: error.message});
 		}
@@ -69,6 +73,7 @@ router.put('/:userID', async(req: Request, res: Response) => {
 		res.status(200).json(modifiedUser);
 	}
 	catch(error) {
+		console.log(error);
 		if(error instanceof HttpError) {
 			res.status(error.status).json( {error: error.message})
 		}

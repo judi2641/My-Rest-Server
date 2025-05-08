@@ -6,6 +6,7 @@ export function isAdministrator(req: Request, res: Response, next: NextFunction)
         return next();
     }
     else{
+        console.log("user hat keine adminrechte");
         res.status(401).json({error: "Not Authorized"});
     }
 }

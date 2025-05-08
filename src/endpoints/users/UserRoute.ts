@@ -7,14 +7,25 @@ import { HttpError } from '../../errors/HttpError';
 const router = express();
 
 router.get("/",isAuthenticated, isAdministrator, async (req: Request, res: Response) => {
-    const users = await getAllUsers();
-    const safeUsers = users.map((user) => {
-        const safeUser = user.toSafeJSON();
-        return safeUser;
-    })
-    const token = (req as any).token;
-    res.setHeader('Authorization', `Bearer ${token}`);
-    res.status(200).json(safeUsers);
+    try{
+        const users = await getAllUsers();
+        const safeUsers = users.map((user) => {
+            const safeUser = user.toSafeJSON();
+            return safeUser;
+        })
+        const token = (req as any).token;
+        res.setHeader('Authorization', `Bearer ${token}`);
+        res.status(200).json(safeUsers);
+    }
+    catch(error){
+        console.log(error);
+        if(error instanceof HttpError){
+            res.status(error.status).json({error: error.message});
+        }
+        else{
+            res.status(500).json("An unkown error occured");
+        }
+    }
 });
 
 router.get('/:userID',isAuthenticated, async(req: Request, res: Response) => {
@@ -31,12 +42,12 @@ router.get('/:userID',isAuthenticated, async(req: Request, res: Response) => {
         }
 
     } catch(error){
+        console.log(error);
         if(error instanceof HttpError){
             res.status(error.status).json({error: error.message});
         }
         else{
             res.status(500).json({error: "An unkown error occured"});
-            console.log(error);
         }
     }
 });
@@ -46,12 +57,12 @@ router.post('/', isAuthenticated, isAdministrator, async(req: Request, res: Resp
         const user = await createUser(req.body);
         res.status(201).json(user.toSafeJSON()); 
     } catch (error) {
+        console.log(error);
         if(error instanceof HttpError){
             res.status(error.status).json({error: error.message});
         }
         else{
             res.status(500).json({error: 'An unkown error occured'});	
-            console.log(error);
         }
     }
 });
@@ -62,6 +73,7 @@ router.delete('/:userID', isAuthenticated, isAdministrator, async(req: Request, 
         res.sendStatus(204);
     }
     catch(error){
+        console.log(error);
         if(error instanceof HttpError){
             res.status(error.status).json({error: error.message});
         }
@@ -72,19 +84,30 @@ router.delete('/:userID', isAuthenticated, isAdministrator, async(req: Request, 
 });
 
 router.put('/:userID', isAuthenticated, async(req:Request, res: Response) => {
-    const userID = req.params.userID;
-    const decodedToken = (req as any).decodedToken;
-    if(decodedToken.isAdministrator || decodedToken.userID == userID){
+    try{
+        const userID = req.params.userID;
+        const decodedToken = (req as any).decodedToken;
+        if(decodedToken.isAdministrator || decodedToken.userID == userID){
 
-        if(!decodedToken.isAdministrator) {
-            delete req.body.isAdministrator;
+            if(!decodedToken.isAdministrator) {
+                delete req.body.isAdministrator;
+            }
+            
+            const user = await updateUser(userID, req.body);
+            res.status(200).json(user.toSafeJSON());
         }
-        
-        const user = await updateUser(userID, req.body);
-        res.status(200).json(user.toSafeJSON());
+        else{
+            res.status(401).json({error: "Not Authorized"});
+        }
     }
-    else{
-        res.status(401).json({error: "Not Authorized"});
+    catch(error){
+        console.log(error);
+        if(error instanceof HttpError){
+            res.status(error.status).json({error: error.message});
+        }
+        else{
+            res.status(500).json({error: "An unkown error occured"});
+        }
     }
 })
 

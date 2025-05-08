@@ -60,11 +60,11 @@ export async function updateUser(userID: string, userData: {
     password?: string;
     isAdministrator?: boolean;
 }):Promise<IUserDocument> {
+    const userInDatabase = await getUserByUserID(userID);
     if(userData.userID && userID != userData.userID){
         console.log(`request to change userID of user:${userID} in userID: ${userData.userID} -- not allowed`);
         throw new HttpError(400, "do not change the userID");
     }
-    const userInDatabase = await getUserByUserID(userID);
 
     if(userData.password){
         const isSamePassword = await bcryptjs.compare(userData.password, userInDatabase.password);

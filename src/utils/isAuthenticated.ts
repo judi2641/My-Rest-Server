@@ -20,6 +20,7 @@ export function isAuthenticated(req: Request, res: Response, next: NextFunction)
         }
     }
     else{
+        console.log("request hat keinen athentication header");
         res.status(401).json( {error: 'Not Authorized'});
     }
 }

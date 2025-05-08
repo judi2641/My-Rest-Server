@@ -11,9 +11,7 @@ router.get('/',async (req: Request, res: Response) => {
         const { universityShortName } = req.query;
         let courses = await getAllDegreeCourses();
         if(universityShortName){
-            console.log("bin im filter");
             courses = courses.filter(c => c.universityShortName === universityShortName);
-            console.log(courses);
         }
         res.status(200).json(courses);
     }

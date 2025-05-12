@@ -65,7 +65,4 @@ UserSchema.pre('save', async function() {
 });
 
 delete mongoose.models.User;
-const UserModel = mongoose.model<IUserDocument>('User', UserSchema);
-
-
-export default UserModel;
+export const UserModel = mongoose.model<IUserDocument>('User', UserSchema);

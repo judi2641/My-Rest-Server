@@ -25,5 +25,4 @@ DegreeCourseSchema.methods.toJSON = function (){
     delete degreeCourse.__v;
     return degreeCourse;
 }
-const DegreeCourseModel = mongoose.model<IDegreeCourseDocument>('DegreeCourse', DegreeCourseSchema);
-export default DegreeCourseModel;
+export const DegreeCourseModel = mongoose.model<IDegreeCourseDocument>('DegreeCourse', DegreeCourseSchema);

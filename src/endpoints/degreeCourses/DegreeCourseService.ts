@@ -1,5 +1,5 @@
 import { HttpError } from "../../errors/HttpError";
-import DegreeCourseModel, { IDegreeCourseDocument } from "./DegreeCourseModel";
+import { DegreeCourseModel, IDegreeCourseDocument } from "./DegreeCourseModel";
 
 export async function createDegreeCourse(DegreeCourseData: {
     universityName: string;

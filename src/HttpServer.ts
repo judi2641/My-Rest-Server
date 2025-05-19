@@ -6,9 +6,14 @@ import { initAdministrator } from './endpoints/users/UserService';
 import UserRoute from './endpoints/users/UserRoute'; 
 import DegreeCourseRoute from './endpoints/degreeCourses/DegreeCourseRoute';
 import ApplicationRoute from './endpoints/degreeCourseApplications/ApplicationRoute';
+import { readFileSync } from 'fs';
+import https from 'https';
+import http from 'http';
 
+const key = readFileSync('./certificates/key.pem');
+const cert = readFileSync('./certificates/cert.pem');
 const app = express();
-const port = 80;
+
 
 app.use(express.json());
 app.use('/api/publicUsers',PublicUserRoute);
@@ -20,13 +25,23 @@ app.use((req: Request, res: Response) => {
     res.status(404).json({ error: "Route not found"})
 });
 
-initDB()
-    .then(async () => {
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer({key: key, cert: cert},app);
+
+async function startServer(){
+    try{
+        await initDB();
         await initAdministrator();
-        app.listen(port, () => {
-            console.log(`server is running at http://localhost:${port}`);
+        httpServer.listen(80, () => {
+            console.log('HTTP server is running at http://localhost:80')
         });
-    })
-    .catch((error) => {
-        console.error("server error because of database error",error);
-    });
+        httpsServer.listen(443, () => {
+            console.log('HTTPs server is running at https://localhost:443')
+        });
+    }
+    catch(error){
+        console.error('serverstart faild', error);
+    }
+}
+
+startServer();

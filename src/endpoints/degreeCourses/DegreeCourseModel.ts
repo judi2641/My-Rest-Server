@@ -16,6 +16,7 @@ export interface IDegreeCourseDocument extends Document{
     departmentShortName: string;
     name: string;
     shortName: string;
+    _id: string;
 }
 
 DegreeCourseSchema.methods.toJSON = function (){

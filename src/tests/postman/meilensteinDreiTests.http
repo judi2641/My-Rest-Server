@@ -1,30 +1,30 @@
 // Login mit Basic Authentication mit korrekten Credentials admin:123
 ###
 # @name loginAdminCorrect
-GET https://localhost/api/authenticate
+GET http://localhost/api/authenticate
 Authorization: Basic YWRtaW46MTIz
 
 @adminToken = {{loginAdminCorrect.response.headers.Authorization}}
 
 // Login mit Basic Authentication mit falschen Credentials
 ###
-GET https://localhost/api/authenticate
+GET http://localhost/api/authenticate
 Authorization: Basic admin:1234
 
 ### Auflisten aller Nutzer ohne Token
-GET https://localhost/api/users
+GET http://localhost/api/users
 
 ### Auflisten aller Nutzer mit Token(Admin)
-GET https://localhost/api/users
+GET http://localhost/api/users
 Authorization: {{adminToken}}
 
 ### Abrufen eines konkreten Users per User-ID
-GET https://localhost/api/users/admin
+GET http://localhost/api/users/admin
 Authorization: {{adminToken}}
 
 // Lege zweiten User an
 ###
-POST https://localhost/api/users
+POST http://localhost/api/users
 Authorization: {{adminToken}}
 Content-Type: application/json
 
@@ -36,7 +36,7 @@ Content-Type: application/json
 }
 
 ###
-PUT https://localhost/api/users/manfred
+PUT http://localhost/api/users/manfred
 Authorization: {{adminToken}}
 Content-Type: application/json
 
@@ -46,20 +46,20 @@ Content-Type: application/json
 }
 
 ### Auflisten aller Nutzer mit Token
-https://localhost/api/users
+http://localhost/api/users
 Authorization: {{adminToken}}
 
 //
 // Studiengänge
 //
 ### Auflisten aller Studiengänge
-GET https://localhost/api/degreeCourses
+GET http://localhost/api/degreeCourses
 Authorization: {{adminToken}}
 
 // Lege einen Studiengang an
 ###
 # @name createDegreeCourseRequest
-POST https://127.0.0.1/api/degreeCourses
+POST http://127.0.0.1/api/degreeCourses
 Authorization: {{adminToken}}
 Content-Type: application/json
 
@@ -76,16 +76,16 @@ Content-Type: application/json
 @degreeCourseID = {{createDegreeCourseRequest.response.body.id}}
 
 ### Auflisten aller Studiengänge, es sollte jetzt einen geben
-https://localhost/api/degreeCourses
+http://localhost/api/degreeCourses
 Authorization: {{adminToken}}
 
 ### Abrufen von dem angelegten Studiengang
-https://localhost/api/degreeCourses/{{degreeCourseID}}
+http://localhost/api/degreeCourses/{{degreeCourseID}}
 Authorization: {{adminToken}}
 
 
 ### Ändere den Namen des Studiengangs
-PUT https://localhost/api/degreeCourses/{{degreeCourseID}}
+PUT http://localhost/api/degreeCourses/{{degreeCourseID}}
 Authorization: {{adminToken}}
 Content-Type: application/json
 
@@ -94,29 +94,29 @@ Content-Type: application/json
 }
 
 ### Auflisten der Studiengänge einer bestimmten Hochschule
-GET https://localhost/api/degreeCourses?universityShortName=Beuth HS
+GET http://localhost/api/degreeCourses?universityShortName=Beuth HS
 Authorization: {{adminToken}}
 
 ### Auflisten aller Studienbewerbungen, es sollte noch keine geben
-https://localhost/api/degreeCourseApplications
+http://localhost/api/degreeCourseApplications
 Authorization: {{adminToken}}
 
 // Login mit Basic Authentication als manfred mit korrekten Credentials
 ###
 # @name loginManfredCorrect
-GET https://localhost/api/authenticate
+GET http://localhost/api/authenticate
 Authorization: Basic manfred:asdf
 ###
 @manfredToken = {{loginManfredCorrect.response.headers.Authorization}}
 
 ### Studienbewerbungen für manfred auflisten (es sollte 0 sein)
-GET https://localhost/api/degreeCourseApplications/myApplications
+GET http://localhost/api/degreeCourseApplications/myApplications
 Authorization: {{manfredToken}}
 
 // Studienbewerbung für Manfred anlegen
 ###
 # @name createApplicationRequest
-POST https://localhost/api/degreeCourseApplications
+POST http://localhost/api/degreeCourseApplications
 Authorization: {{manfredToken}}
 Content-Type: application/json
 
@@ -128,7 +128,7 @@ Content-Type: application/json
 
 // Lege dritten User an
 ###
-POST https://localhost/api/users
+POST http://localhost/api/users
 Authorization: {{adminToken}}
 Content-Type: application/json
 
@@ -141,7 +141,7 @@ Content-Type: application/json
 
 // In diesem Fall legt der Administrator für den User susi eine Bewerbung an
 ###
-POST https://localhost/api/degreeCourseApplications
+POST http://localhost/api/degreeCourseApplications
 Authorization: {{adminToken}}
 Content-Type: application/json
 
@@ -154,7 +154,7 @@ Content-Type: application/json
 
 // In diesem Fall legt der Administrator für den User manfred erneut die gleiche Bewerbung an, das sollte scheitern
 ###
-POST https://localhost/api/degreeCourseApplications
+POST http://localhost/api/degreeCourseApplications
 Authorization: {{adminToken}}
 Content-Type: application/json
 
@@ -169,20 +169,20 @@ Content-Type: application/json
 @applicationID = {{createApplicationRequest.response.body.id}}
 
 ### Studienbewerbungen für manfred auflisten (es sollte 1 sein)
-GET https://localhost/api/degreeCourseApplications/myApplications
+GET http://localhost/api/degreeCourseApplications/myApplications
 Authorization: {{manfredToken}}
 
 ### Der Admin sucht nach Bewerbungen von Manfred
-GET https://localhost/api/degreeCourseApplications?applicantUserID=manfred
+GET http://localhost/api/degreeCourseApplications?applicantUserID=manfred
 Authorization: {{adminToken}}
 
 ### Auflisten der Bewerbungen für einen Studiengang
-GET https://localhost/api/degreeCourseApplications?degreeCourseID={{degreeCourseID}}
+GET http://localhost/api/degreeCourseApplications?degreeCourseID={{degreeCourseID}}
 Authorization: {{adminToken}}
 
 ###
 // Anlegen einer Bewerbung für einen Studiengang, den es nicht gibt, Es sollte eine Fehlermeldung geben
-POST https://localhost/api/degreeCourseApplications
+POST http://localhost/api/degreeCourseApplications
 Authorization: {{manfredToken}}
 Content-Type: application/json
 
@@ -197,7 +197,7 @@ GET https://localhost/api/degreeCourses/{{degreeCourseID}}/degreeCourseApplicati
 Authorization: {{adminToken}}
 
 ### Ändere das Bewerbungsjahr in der existierenden Bewerbung
-PUT https://localhost/api/degreeCourseApplications/{{applicationID}}
+PUT http://localhost/api/degreeCourseApplications/{{applicationID}}
 Authorization: {{adminToken}}
 Content-Type: application/json
 

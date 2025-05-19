@@ -5,7 +5,7 @@ import AuthenticationRoute from './endpoints/authentication/AuthenticationRoute'
 import { initAdministrator } from './endpoints/users/UserService';
 import UserRoute from './endpoints/users/UserRoute'; 
 import DegreeCourseRoute from './endpoints/degreeCourses/DegreeCourseRoute';
-
+import ApplicationRoute from './endpoints/degreeCourseApplications/ApplicationRoute';
 
 const app = express();
 const port = 80;
@@ -15,6 +15,7 @@ app.use('/api/publicUsers',PublicUserRoute);
 app.use('/api/authenticate', AuthenticationRoute);
 app.use('/api/users', UserRoute);
 app.use('/api/degreeCourses', DegreeCourseRoute);
+app.use('/api/degreeCourseApplications', ApplicationRoute);
 app.use((req: Request, res: Response) => {
     res.status(404).json({ error: "Route not found"})
 });

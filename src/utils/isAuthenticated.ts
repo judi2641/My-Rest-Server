@@ -2,6 +2,13 @@ import { Request, Response, NextFunction, } from "express";
 import config from 'config';
 import jwt from 'jsonwebtoken';
 
+/**
+ * checks if user has valid token and adds the decodedToken and the token to request.
+ * @param req 
+ * @param res 
+ * @param next 
+ * @throws 401 HttpError if request has no token or token is not valid
+ */
 export function isAuthenticated(req: Request, res: Response, next: NextFunction){
     const authHeader = req.headers.authorization;
     if(authHeader){

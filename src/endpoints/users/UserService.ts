@@ -32,7 +32,7 @@ export async function getUserByUserID(userID: string): Promise<IUserDocument>{
     const user = await UserModel.findOne( {userID} );
     if(!user){
         console.log(`user with userID: ${userID} not found`);
-        throw new HttpError(404, "User not found");
+        throw new HttpError(404, "user not found");
     }
     console.log(`user with userID:${userID} found`);
     return user;
@@ -45,7 +45,7 @@ export async function deleteUserByUserID(userID: string):Promise<void>{
     const user = await UserModel.findOneAndDelete( {userID} );
     if(!user){
         console.log(`user with userID:${userID} not found`);
-        throw new HttpError(404, "User not found");
+        throw new HttpError(404, "user not found");
     }
     console.log(`user with userID:${userID} found and deleted`);
 };

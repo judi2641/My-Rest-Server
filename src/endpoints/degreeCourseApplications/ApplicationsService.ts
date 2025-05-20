@@ -4,6 +4,7 @@ import { HttpError } from "../../errors/HttpError";
 import { DegreeCourseModel } from "../degreeCourses/DegreeCourseModel";
 import { getDegreeCourseByID } from "../degreeCourses/DegreeCourseService";
 import mongoose from "mongoose";
+import { getUserByUserID } from "../users/UserService";
 
 /**
  * 
@@ -27,12 +28,15 @@ export async function createApplication(ApplicationData: {
 
     //checks if ID of degreeCourse is valid and ensure that it exists
     if(!mongoose.Types.ObjectId.isValid(application.degreeCourseID)){
-        throw new HttpError(400, 'DegreeCourse does not exist');
+        console.log(`course with id ${application.degreeCourseID} not found`);
+        throw new HttpError(404, 'course not found');
     }
-    const degreeCourse = await DegreeCourseModel.findOne({_id: application.degreeCourseID});
-    if(!degreeCourse){
-        throw new HttpError(400,'DegreeCourse does not exist');
-    }
+    
+    //checks if degreeCourse is in database
+    await getDegreeCourseByID(application.degreeCourseID);
+
+    //checks if user is in database
+    await getUserByUserID(application.applicantUserID);
 
     //checks if the same application already exists
     const existingApplication = await ApplicationModel.findOne({identifier: application.identifier});

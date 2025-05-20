@@ -16,14 +16,7 @@ export async function createApplication(ApplicationData: {
     degreeCourseID: string;
     targetPeriodYear: string;
     targetPeriodShortName: string;
-    identifier: string;
 }):Promise<IApplication>{
-    ApplicationData.identifier = 
-        ApplicationData.applicantUserID + 
-        ApplicationData.degreeCourseID + 
-        ApplicationData.targetPeriodYear+ 
-        ApplicationData.targetPeriodShortName;
-
     const application = new ApplicationModel(ApplicationData);
 
     //checks if ID of degreeCourse is valid and ensure that it exists
@@ -39,7 +32,8 @@ export async function createApplication(ApplicationData: {
     await getUserByUserID(application.applicantUserID);
 
     //checks if the same application already exists
-    const existingApplication = await ApplicationModel.findOne({identifier: application.identifier});
+    const identifier = application.applicantUserID + application.degreeCourseID + application.targetPeriodYear + application.targetPeriodShortName;
+    const existingApplication = await ApplicationModel.findOne({identifier: identifier});
     if(existingApplication){
         throw new HttpError(400, "An application already exists");
     }
@@ -100,9 +94,15 @@ export async function updateApplication(applicationID: string, applicationData:{
     targetPeriodYear?: string;
     targetPeriodShortName?: string;
 }):Promise<IApplication>{
-    console.log('bin in updateApplication')
-    console.log(applicationID);
+
     const application = await getApplicationByID(applicationID);
     Object.assign(application, applicationData);
+
+    //checks if the same application already exists
+    const identifier = application.applicantUserID + application.degreeCourseID + application.targetPeriodYear + application.targetPeriodShortName;
+    const existingApplication = await ApplicationModel.findOne({identifier: identifier});
+    if(existingApplication){
+        throw new HttpError(400, "An application already exists");
+    }
     return await application.save();
 }

@@ -31,33 +31,31 @@ describe('createApplication',() => {
   it('create valid application', async () => {
     const application = await createApplication({
       applicantUserID: "juliusdittrich",
+      degreeCourseID: degreeCourse._id,
+      targetPeriodYear: "2024",
+      targetPeriodShortName: "WiSe"
+    });
+    expect(application.toObject()).toMatchObject({
+      applicantUserID: "juliusdittrich",
       degreeCourseID: degreeCourse._id.toString(),
       targetPeriodYear: "2024",
       targetPeriodShortName: "WiSe",
-      identifier: ""
+      identifier: `juliusdittrich${degreeCourse._id.toString()}2024WiSe`
     });
-    expect(application).toBeDefined();
-    expect(application.applicantUserID).toBe("juliusdittrich");
-    expect(application.degreeCourseID.toString()).toBe(degreeCourse._id.toString());
-    expect(application.targetPeriodYear).toBe("2024");
-    expect(application.targetPeriodShortName).toBe("WiSe");
-    expect(application.identifier).toBe(`juliusdittrich${degreeCourse._id.toString()}2024WiSe`);
   })
 
   it('create application which already exists', async () => {
     const application = await createApplication({
       applicantUserID: "juliusdittrich",
-      degreeCourseID: degreeCourse._id.toString(),
+      degreeCourseID: degreeCourse._id,
       targetPeriodYear: "2024",
       targetPeriodShortName: "WiSe",
-      identifier: ""
     });
     await expect(createApplication({
       applicantUserID: "juliusdittrich",
-      degreeCourseID: degreeCourse._id.toString(),
+      degreeCourseID: degreeCourse._id,
       targetPeriodYear: "2024",
       targetPeriodShortName: "WiSe",
-      identifier: ""
     })).rejects.toBeInstanceOf(HttpError);
   })
 
@@ -67,7 +65,6 @@ describe('createApplication',() => {
       degreeCourseID: "gibt es nicht",
       targetPeriodShortName: "WiSe",
       targetPeriodYear: "2025",
-      identifier: ""
     })).rejects.toMatchObject({
       status: 404,
       message: "course not found"
@@ -77,10 +74,9 @@ describe('createApplication',() => {
   it('create application with a userID that does not exist', async () => {
     await expect(createApplication({
       applicantUserID: "manfredschreiben",
-      degreeCourseID: degreeCourse._id.toString(),
+      degreeCourseID: degreeCourse._id,
       targetPeriodShortName: "WiSe",
       targetPeriodYear: "2025",
-      identifier: ""
     })).rejects.toMatchObject({
       status: 404,
       message: "user not found"

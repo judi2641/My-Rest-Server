@@ -20,7 +20,7 @@ export interface IUserDocument extends IUser, Document{
 }
 
 /**
- * interface zum transfer des users. beitzt zusätzliche felder für token, aber keins für das passwort
+ * interface zum transfer des users. kein feld für das passwort
  */
 export interface TransferUser{
     userID: string;

@@ -26,5 +26,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm test
+    - name: install dependencies
+      run: npm ci
+
+    - name: Run unit tests
+      run: npm test:jest
+
+    - name: Start server in background
+      run: |
+        npm start &         # Passe das an dein Start-Skript an
+        sleep 10                # Gib dem Server Zeit zum Hochfahren
+
+    - name: Run Newman tests
+      run: npm run test:newman

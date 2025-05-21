@@ -4,7 +4,8 @@
   "main": "",
   "scripts": {
     "start": "nodemon src/HttpServer.ts",
-    "test": "jest"
+    "test:jest": "jest",
+    "test:newman": "newman run tests/postman/My-Rest-Server-Tests.postman_collection.json --insecure"
   },
   "author": "Julius Dittrich",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "eslint": "^9.26.0",
     "jest": "^29.7.0",
     "mongodb-memory-server": "^10.1.4",
+    "newman": "^6.2.1",
     "nodemon": "^3.1.9",
     "ts-jest": "^29.3.4",
     "ts-node": "^10.9.2",

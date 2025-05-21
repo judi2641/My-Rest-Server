@@ -32,11 +32,11 @@ async function startServer(){
     try{
         await initDB();
         await initAdministrator();
-        httpServer.listen(80, () => {
-            console.log('HTTP server is running at http://localhost:80')
+        httpServer.listen(8080, () => {
+            console.log('HTTP server is running at http://localhost:8080')
         });
-        httpsServer.listen(443, () => {
-            console.log('HTTPs server is running at https://localhost:443')
+        httpsServer.listen(3443, () => {
+            console.log('HTTPs server is running at https://localhost:3443')
         });
     }
     catch(error){

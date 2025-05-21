@@ -34,10 +34,10 @@ async function startServer(){
     try{
         await initDB();
         await initAdministrator();
-        httpServer.listen(80, () => {
+        httpServer.listen(httpPort, () => {
             console.log(`HTTP server is running at http://localhost:${httpPort}`);
         });
-        httpsServer.listen(443, () => {
+        httpsServer.listen(httpsPort, () => {
             console.log(`HTTPs server is running at https://localhost:${httpsPort}`);
         });
     }

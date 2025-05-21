@@ -42,11 +42,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost/api/authenticate",
+					"raw": "https://localhost:3443/api/authenticate",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
+					"port": "3443",
 					"path": [
 						"api",
 						"authenticate"
@@ -57,6 +58,20 @@
 		},
 		{
 			"name": "http://localhost/api/authenticate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status ist 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -88,11 +103,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost/api/authenticate",
+					"raw": "http://localhost:8080/api/authenticate",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
+					"port": "8080",
 					"path": [
 						"api",
 						"authenticate"

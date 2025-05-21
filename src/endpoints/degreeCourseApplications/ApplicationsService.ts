@@ -107,3 +107,9 @@ export async function updateApplication(applicationID: string, applicationData:{
     }
     return await application.save();
 }
+
+export async function getApplicationsByDegreeCourseID(degreecourseID:string):Promise<IApplication[]>{
+    let applications = await getAllApplications();
+    applications = applications.filter(a => a.degreeCourseID = degreecourseID);
+    return applications;
+}

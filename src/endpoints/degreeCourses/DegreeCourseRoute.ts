@@ -3,6 +3,7 @@ import { createDegreeCourse, deleteDegreeCourse, getAllDegreeCourses, getDegreeC
 import { HttpError } from '../../errors/HttpError';
 import { isAdministrator } from '../../utils/isAdministrator';
 import { isAuthenticated } from '../../utils/isAuthenticated';
+import { getApplicationsByDegreeCourseID } from '../degreeCourseApplications/ApplicationsService';
 
 const router = express();
 
@@ -25,6 +26,23 @@ router.get('/',async (req: Request, res: Response) => {
         }
     }
 });
+
+router.get('/:degreeCourseID/degreeCourseApplications', isAuthenticated, isAdministrator, async (req: Request, res: Response) => {
+    try{
+        const course = await getDegreeCourseByID(req.params.degreeCourseID);
+        const applications = await getApplicationsByDegreeCourseID(course._id);
+        res.status(200).json(applications);
+    }
+    catch(error){
+        console.log(error)
+        if(error instanceof HttpError){
+            res.status(error.status).json({error: error.message});
+        }
+        else{
+            res.status(500).json("Something went wrong");
+        }
+    }
+})
 
 router.get('/:degreeCourseID', async (req: Request, res: Response) => {
     try{

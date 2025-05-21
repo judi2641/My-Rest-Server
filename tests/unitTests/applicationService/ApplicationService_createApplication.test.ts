@@ -1,9 +1,9 @@
-import { createApplication } from '../../src/endpoints/degreeCourseApplications/ApplicationsService';
-import { createUser } from '../../src/endpoints/users/UserService';
-import { IDegreeCourseDocument } from '../../src/endpoints/degreeCourses/DegreeCourseModel';
-import { createDegreeCourse } from '../../src/endpoints/degreeCourses/DegreeCourseService';
-import { IUserDocument } from '../../src/endpoints/users/UserModel';
-import { HttpError } from '../../src/errors/HttpError';
+import { createApplication } from '../../../src/endpoints/degreeCourseApplications/ApplicationsService';
+import { createUser } from '../../../src/endpoints/users/UserService';
+import { IDegreeCourseDocument } from '../../../src/endpoints/degreeCourses/DegreeCourseModel';
+import { createDegreeCourse } from '../../../src/endpoints/degreeCourses/DegreeCourseService';
+import { IUserDocument } from '../../../src/endpoints/users/UserModel';
+import { HttpError } from '../../../src/errors/HttpError';
 
 describe('createApplication',() => {
   let user: IUserDocument;

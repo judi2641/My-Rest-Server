@@ -1,10 +1,9 @@
-import { IApplication } from "../../src/endpoints/degreeCourseApplications/ApplicationModel";
-import { IDegreeCourseDocument } from "../../src/endpoints/degreeCourses/DegreeCourseModel";
-import { IUserDocument } from "../../src/endpoints/users/UserModel";
-import { createUser } from "../../src/endpoints/users/UserService";
-import { createDegreeCourse } from "../../src/endpoints/degreeCourses/DegreeCourseService";
-import { createApplication, updateApplication } from "../../src/endpoints/degreeCourseApplications/ApplicationsService";
-import { application } from "express";
+import { IApplication } from "../../../src/endpoints/degreeCourseApplications/ApplicationModel";
+import { IDegreeCourseDocument } from "../../../src/endpoints/degreeCourses/DegreeCourseModel";
+import { IUserDocument } from "../../../src/endpoints/users/UserModel";
+import { createUser } from "../../../src/endpoints/users/UserService";
+import { createDegreeCourse } from "../../../src/endpoints/degreeCourses/DegreeCourseService";
+import { createApplication, updateApplication } from "../../../src/endpoints/degreeCourseApplications/ApplicationsService";
 
 
 describe("updateApplication", () => {

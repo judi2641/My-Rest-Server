@@ -27,16 +27,18 @@ app.use((req: Request, res: Response) => {
 
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer({key: key, cert: cert},app);
+const httpPort = 8080;
+const httpsPort = 3443
 
 async function startServer(){
     try{
         await initDB();
         await initAdministrator();
-        httpServer.listen(8080, () => {
-            console.log('HTTP server is running at http://localhost:8080')
+        httpServer.listen(80, () => {
+            console.log(`HTTP server is running at http://localhost:${httpPort}`);
         });
-        httpsServer.listen(3443, () => {
-            console.log('HTTPs server is running at https://localhost:3443')
+        httpsServer.listen(443, () => {
+            console.log(`HTTPs server is running at https://localhost:${httpsPort}`);
         });
     }
     catch(error){

@@ -45,8 +45,8 @@ jobs:
 
     - name: Start server in background
       run: |
-        npm start &         # Passe das an dein Start-Skript an
-        sleep 10                # Gib dem Server Zeit zum Hochfahren
+        npm start &
+        sleep 10
 
     - name: Run Newman tests
       run: npm run test:newman

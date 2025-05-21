@@ -82,14 +82,16 @@ router.put('/:applicationID', isAuthenticated, async(req: Request, res: Response
     const decodedToken = (req as any).decodedToken;
     try{
         let application = await getApplicationByID(req.params.applicationID);
-        if(application.applicantUserID !== decodedToken.userID){
+
+        //ensures that common users can only change their own data
+        if(!decodedToken.isAdministrator && application.applicantUserID !== decodedToken.userID){
             res.status(401).json({error: "Only allowed to change your data"})
         }
+        //ensures that common users dont change the applicantUserID and degreeCourseID
         else if(!decodedToken.isAdministrator && (('applicantUserID' in req.body) || ('degreeCourseID' in req.body))){
             res.status(401).json({error: "Only allowed to change year and semester"});
         }
         else{
-            console.log(req.params.applicantUserID);
             const application = await updateApplication(req.params.applicationID, req.body);
             res.status(200).json(application);
         }

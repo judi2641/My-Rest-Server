@@ -94,8 +94,9 @@ export async function updateApplication(applicationID: string, applicationData:{
     targetPeriodYear?: string;
     targetPeriodShortName?: string;
 }):Promise<IApplication>{
-
+    
     const application = await getApplicationByID(applicationID);
+    console.log(`found application with id ${applicationID}`);
     Object.assign(application, applicationData);
 
     //checks if the same application already exists

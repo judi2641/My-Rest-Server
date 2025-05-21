@@ -1,4 +1,4 @@
-import mongoose, { Document } from "mongoose";
+import mongoose, { Document, ObjectId } from "mongoose";
 
 export interface IApplication extends Document{
     applicantUserID: string;
@@ -6,6 +6,7 @@ export interface IApplication extends Document{
     targetPeriodYear: string;
     targetPeriodShortName: string;
     identifier: string;
+    _id: ObjectId;
 }
 
 const ApplicationSchema = new mongoose.Schema({
@@ -13,7 +14,7 @@ const ApplicationSchema = new mongoose.Schema({
     degreeCourseID: { type: String, required: true },
     targetPeriodYear: { type: String, required: true },
     targetPeriodShortName: { type: String, required: true },
-    identifier: { type: String, unique: true}
+    identifier: { type: String, unique: true},
 });
 
 ApplicationSchema.methods.toJSON = function(){
@@ -22,6 +23,7 @@ ApplicationSchema.methods.toJSON = function(){
     rest.id = _id;
     return rest;
 }
+
 
 ApplicationSchema.pre<IApplication>('save', function (next) {
   if (

@@ -8,7 +8,6 @@ const DegreeCourseSchema = new mongoose.Schema({
     name: { type: String, required: true },
     shortName: { type: String, required: true },
 });
-
 export interface IDegreeCourseDocument extends Document{
     universityName: string;
     universityShortName: string;
@@ -18,7 +17,6 @@ export interface IDegreeCourseDocument extends Document{
     shortName: string;
     _id: string;
 }
-
 DegreeCourseSchema.methods.toJSON = function (){
     const degreeCourse = this.toObject();
     degreeCourse.id = degreeCourse._id;

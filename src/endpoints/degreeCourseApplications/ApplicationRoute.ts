@@ -5,7 +5,6 @@ import { HttpError } from '../../errors/HttpError';
 import { isAdministrator } from '../../utils/isAdministrator';
 
 const router = express();
-
 router.get('/myApplications', isAuthenticated,  async (req: Request, res: Response) => {
     const userID = (req as any).decodedToken.userID;
     try{
@@ -23,7 +22,6 @@ router.get('/myApplications', isAuthenticated,  async (req: Request, res: Respon
         }
     }
 });
-
 router.get('/', isAuthenticated, isAdministrator, async(req: Request, res: Response) =>{
     try{
         const {applicantUserID, degreeCourseID, targetPeriodYear, targetPeriodShortName} = req.query;
@@ -52,7 +50,6 @@ router.get('/', isAuthenticated, isAdministrator, async(req: Request, res: Respo
         }
     }
 });
-
 router.post('/', isAuthenticated, async(req: Request, res: Response) => {
     const decodedToken = (req as any).decodedToken;
     try{
@@ -77,15 +74,13 @@ router.post('/', isAuthenticated, async(req: Request, res: Response) => {
         }
     }
 });
-
 router.put('/:applicationID', isAuthenticated, async(req: Request, res: Response) => {
     const decodedToken = (req as any).decodedToken;
     try{
         let application = await getApplicationByID(req.params.applicationID);
-
         //ensures that common users can only change their own data
-        if(!decodedToken.isAdministrator && application.applicantUserID !== decodedToken.userID){
-            res.status(401).json({error: "Only allowed to change your data"})
+        if(!decodedToken.isAdministrator && (application.applicantUserID !== decodedToken.userID)){
+            res.status(401).json({error: "Only allowed to change your data"});
         }
         //ensures that common users dont change the applicantUserID and degreeCourseID
         else if(!decodedToken.isAdministrator && (('applicantUserID' in req.body) || ('degreeCourseID' in req.body))){
@@ -106,7 +101,6 @@ router.put('/:applicationID', isAuthenticated, async(req: Request, res: Response
         }
     }
 });
-
 router.delete('/:applicationID', isAuthenticated, async(req: Request, res: Response) => {
     const decodedToken = (req as any).decodedToken;
     try{
@@ -130,6 +124,4 @@ router.delete('/:applicationID', isAuthenticated, async(req: Request, res: Respo
         }   
     }
 })
-
-
 export default router;

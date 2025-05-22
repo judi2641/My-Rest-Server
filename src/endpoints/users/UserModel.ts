@@ -18,7 +18,6 @@ export interface IUserDocument extends IUser, Document{
     toSafeJSON(): TransferUser;
     toJSON(): IUser;
 }
-
 /**
  * interface zum transfer des users. kein feld für das passwort
  */
@@ -29,7 +28,6 @@ export interface TransferUser{
     isAdministrator: boolean;
     id: string;
 }
-
 const UserSchema = new mongoose.Schema<IUserDocument>({
     userID: {type: String, required: true, unique: true, immutable: true},
     firstName: String,
@@ -37,7 +35,6 @@ const UserSchema = new mongoose.Schema<IUserDocument>({
     password: {type: String, required: true},
     isAdministrator: {type: Boolean, default: false}
 });
-
 UserSchema.methods.toSafeJSON = function (): TransferUser {
     const user = this.toObject();
     delete user.password;
@@ -46,7 +43,6 @@ UserSchema.methods.toSafeJSON = function (): TransferUser {
     delete user.__v;
     return user;
   };
-
 UserSchema.methods.toJSON = function (): IUser{
     const user = this.toObject();
     user.id = user._id;
@@ -54,7 +50,6 @@ UserSchema.methods.toJSON = function (): IUser{
     delete user.__v;
     return user;
 }
-
 UserSchema.pre('save', async function() {
     //document middleware untersützt save() methode
     //man kann mit .this auf das aktuelle document zugreifen
@@ -63,6 +58,5 @@ UserSchema.pre('save', async function() {
         this.password = await bcryptjs.hash(this.password,10);
     }
 });
-
 delete mongoose.models.User;
 export const UserModel = mongoose.model<IUserDocument>('User', UserSchema);

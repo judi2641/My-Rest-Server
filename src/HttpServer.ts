@@ -27,8 +27,8 @@ app.use((req: Request, res: Response) => {
 
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer({key: key, cert: cert},app);
-const httpPort = 8080;
-const httpsPort = 3443
+const httpPort = 80;
+const httpsPort = 443
 
 async function startServer(){
     try{

@@ -26,7 +26,6 @@ router.get('/',async (req: Request, res: Response) => {
         }
     }
 });
-
 //nachgelagerte Suche
 router.get('/:degreeCourseID/degreeCourseApplications',isAuthenticated, isAdministrator, async (req: Request, res: Response) => {
     try{
@@ -44,7 +43,6 @@ router.get('/:degreeCourseID/degreeCourseApplications',isAuthenticated, isAdmini
         }
     }
 })
-
 router.get('/:degreeCourseID', async (req: Request, res: Response) => {
     try{
         const course = await getDegreeCourseByID(req.params.degreeCourseID);
@@ -60,7 +58,6 @@ router.get('/:degreeCourseID', async (req: Request, res: Response) => {
         }
     }
 });
-
 router.post('/',isAuthenticated, isAdministrator, async (req: Request, res: Response) => {
     try{
         const degreeCourse = await createDegreeCourse(req.body);
@@ -76,7 +73,6 @@ router.post('/',isAuthenticated, isAdministrator, async (req: Request, res: Resp
         }
     }
 });
-
 router.put('/:degreeCourseID', isAuthenticated, isAdministrator, async (req: Request, res: Response) => {
     try{
         const degreeCourse = await updateDegreeCourse(req.params.degreeCourseID, req.body);
@@ -92,7 +88,6 @@ router.put('/:degreeCourseID', isAuthenticated, isAdministrator, async (req: Req
         }
     }
 });
-
 router.delete('/:degreeCourseID', isAuthenticated, isAdministrator, async (req: Request, res: Response) => {
     try{
         await deleteDegreeCourse(req.params.degreeCourseID);
@@ -108,6 +103,5 @@ router.delete('/:degreeCourseID', isAuthenticated, isAdministrator, async (req: 
         }
     }
 })
-
 export default router;
 

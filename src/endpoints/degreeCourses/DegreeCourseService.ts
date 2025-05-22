@@ -9,15 +9,12 @@ export async function createDegreeCourse(DegreeCourseData: {
     name: string;
     shortName: string;
 }):Promise<IDegreeCourseDocument>{
-    
     const degreeCourse = new DegreeCourseModel(DegreeCourseData);
     return await degreeCourse.save();
 };
-
 export async function getAllDegreeCourses():Promise<IDegreeCourseDocument[]>{
     return await DegreeCourseModel.find();
 };
-
 export async function getDegreeCourseByID(degreeCourseID: string):Promise<IDegreeCourseDocument>{
     const degreeCourse = await DegreeCourseModel.findById(degreeCourseID);
     if(!degreeCourse){
@@ -29,7 +26,6 @@ export async function getDegreeCourseByID(degreeCourseID: string):Promise<IDegre
         return degreeCourse;
     }
 }
-
 export async function deleteDegreeCourse(degreeCourseID: string):Promise<void>{
     const degreeCourse = await DegreeCourseModel.findOneAndDelete({ _id: degreeCourseID });
     if(!degreeCourse){
@@ -40,7 +36,6 @@ export async function deleteDegreeCourse(degreeCourseID: string):Promise<void>{
         console.log(`course with id ${degreeCourseID} found and deleted`);
     }
 }
-
 export async function updateDegreeCourse(degreeCourseID: string, degereCourseData:{
     universityName?: string;
     universityShortName?: string;

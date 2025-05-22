@@ -18,7 +18,6 @@ router.post("/", async (req: Request, res: Response) => {
 		}
 	}
 });
-
 router.get("/", async (req: Request, res: Response) =>{
 	try{
 		const users = await getAllUsers();
@@ -34,7 +33,6 @@ router.get("/", async (req: Request, res: Response) =>{
 		}
 	}
 });
-
 router.get('/:userID', async (req: Request, res: Response) =>{
 	try{
 		const user = await getUserByUserID(req.params.userID);
@@ -50,7 +48,6 @@ router.get('/:userID', async (req: Request, res: Response) =>{
 		}
 	}
 });
-
 router.delete('/:userID', async (req: Request, res: Response) =>{
 	try{
 		await deleteUserByUserID(req.params.userID);
@@ -66,7 +63,6 @@ router.delete('/:userID', async (req: Request, res: Response) =>{
 		}
 	}
 });
-
 router.put('/:userID', async(req: Request, res: Response) => {
 	try{
 		const modifiedUser = await updateUser(req.params.userID, req.body);
@@ -82,5 +78,4 @@ router.put('/:userID', async(req: Request, res: Response) => {
 		}
 	}
 });
-
 export default router;

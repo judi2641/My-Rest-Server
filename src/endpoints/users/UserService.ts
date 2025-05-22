@@ -19,11 +19,9 @@ export async function createUser(userData: {
         throw new HttpError(400, "Failed to create user");
     }
 }
-
 export async function getAllUsers():Promise<IUserDocument[]>{
     return await UserModel.find();
 };
-
 /**
  * throws an error if the user is not in the database
  * @returns user when the user is found
@@ -37,7 +35,6 @@ export async function getUserByUserID(userID: string): Promise<IUserDocument>{
     console.log(`user with userID:${userID} found`);
     return user;
 };
-
 /**
  * throws an error if user not found in database
  */
@@ -49,7 +46,6 @@ export async function deleteUserByUserID(userID: string):Promise<void>{
     }
     console.log(`user with userID:${userID} found and deleted`);
 };
-
 /**
  * throws error if you want to change the userID
  */
@@ -65,7 +61,6 @@ export async function updateUser(userID: string, userData: {
         console.log(`request to change userID of user:${userID} in userID: ${userData.userID} -- not allowed`);
         throw new HttpError(400, "do not change the userID");
     }
-
     if(userData.password){
         const isSamePassword = await bcryptjs.compare(userData.password, userInDatabase.password);
         if(isSamePassword){
@@ -76,7 +71,6 @@ export async function updateUser(userID: string, userData: {
     Object.assign(userInDatabase,userData);
     return await userInDatabase.save();
 }
-
 export async function initAdministrator():Promise<void>{
     const admin = await UserModel.findOne({ isAdministrator: true });
     if(admin){

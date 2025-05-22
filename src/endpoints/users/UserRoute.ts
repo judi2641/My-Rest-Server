@@ -27,7 +27,6 @@ router.get("/",isAuthenticated, isAdministrator, async (req: Request, res: Respo
         }
     }
 });
-
 router.get('/:userID',isAuthenticated, async(req: Request, res: Response) => {
     try{
         const userID = req.params.userID;
@@ -40,7 +39,6 @@ router.get('/:userID',isAuthenticated, async(req: Request, res: Response) => {
         else{
             res.status(401).json({error: "Not Authorized"});
         }
-
     } catch(error){
         console.log(error);
         if(error instanceof HttpError){
@@ -51,7 +49,6 @@ router.get('/:userID',isAuthenticated, async(req: Request, res: Response) => {
         }
     }
 });
-
 router.post('/', isAuthenticated, isAdministrator, async(req: Request, res: Response) => {
     try {
         const user = await createUser(req.body);
@@ -66,7 +63,6 @@ router.post('/', isAuthenticated, isAdministrator, async(req: Request, res: Resp
         }
     }
 });
-
 router.delete('/:userID', isAuthenticated, isAdministrator, async(req: Request, res: Response) => {
     try{
         await deleteUserByUserID(req.params.userID);
@@ -82,17 +78,15 @@ router.delete('/:userID', isAuthenticated, isAdministrator, async(req: Request, 
         }
     }
 });
-
 router.put('/:userID', isAuthenticated, async(req:Request, res: Response) => {
     try{
         const userID = req.params.userID;
         const decodedToken = (req as any).decodedToken;
         if(decodedToken.isAdministrator || decodedToken.userID == userID){
-
+            //ensures that isAdministrator cannot be changed
             if(!decodedToken.isAdministrator) {
                 delete req.body.isAdministrator;
             }
-            
             const user = await updateUser(userID, req.body);
             res.status(200).json(user.toSafeJSON());
         }
@@ -110,6 +104,4 @@ router.put('/:userID', isAuthenticated, async(req:Request, res: Response) => {
         }
     }
 })
-
-
 export default router;

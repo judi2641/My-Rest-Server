@@ -1,11 +1,8 @@
 import { ApplicationModel, IApplication } from "./ApplicationModel";
-import { isAuthenticated } from "../../utils/isAuthenticated";
 import { HttpError } from "../../errors/HttpError";
-import { DegreeCourseModel } from "../degreeCourses/DegreeCourseModel";
 import { getDegreeCourseByID } from "../degreeCourses/DegreeCourseService";
 import mongoose from "mongoose";
 import { getUserByUserID } from "../users/UserService";
-
 /**
  * 
  * @param ApplicationData 
@@ -40,14 +37,12 @@ export async function createApplication(ApplicationData: {
 
     return await application.save();    
 };
-
 /**
  * @returns array of all applications, if no application was found empty array will be returned
  */
 export async function getAllApplications():Promise<IApplication[]>{
     return await ApplicationModel.find();
 }
-
 /**
  * @param applicationID 
  * @returns application if ID was found

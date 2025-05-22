@@ -337,10 +337,10 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost::3443/api/degreeCourses",
+					"raw": "https://localhost:3443/api/degreeCourses",
 					"protocol": "https",
 					"host": [
-						"localhost:"
+						"localhost"
 					],
 					"port": "3443",
 					"path": [

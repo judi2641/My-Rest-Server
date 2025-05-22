@@ -45,11 +45,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost/api/authenticate",
+					"raw": "https://localhost:3443/api/authenticate",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
+					"port": "3443",
 					"path": [
 						"api",
 						"authenticate"
@@ -93,11 +94,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost/api/authenticate",
+					"raw": "https://localhost:3443/api/authenticate",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
+					"port": "3443",
 					"path": [
 						"api",
 						"authenticate"
@@ -126,11 +128,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost/api/users",
+					"raw": "https://localhost:3443/api/users",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
+					"port": "3443",
 					"path": [
 						"api",
 						"users"
@@ -170,11 +173,12 @@
 					}
 				],
 				"url": {
-					"raw": "https://localhost/api/users",
+					"raw": "https://localhost:3443/api/users",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
+					"port": "3443",
 					"path": [
 						"api",
 						"users"
@@ -213,11 +217,12 @@
 					}
 				],
 				"url": {
-					"raw": "https://localhost/api/users/admin",
+					"raw": "https://localhost:3443/api/users/admin",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
+					"port": "3443",
 					"path": [
 						"api",
 						"users",
@@ -272,11 +277,12 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost/api/users",
+					"raw": "https://localhost:3443/api/users",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
+					"port": "3443",
 					"path": [
 						"api",
 						"users"
@@ -331,14 +337,12 @@
 					}
 				},
 				"url": {
-					"raw": "https://127.0.0.1/api/degreeCourses",
+					"raw": "https://localhost::3443/api/degreeCourses",
 					"protocol": "https",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"localhost:"
 					],
+					"port": "3443",
 					"path": [
 						"api",
 						"degreeCourses"
@@ -385,11 +389,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost/api/authenticate",
+					"raw": "https://localhost:3443/api/authenticate",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
+					"port": "3443",
 					"path": [
 						"api",
 						"authenticate"
@@ -427,11 +432,12 @@
 					}
 				],
 				"url": {
-					"raw": "https://localhost/api/degreeCourseApplications/myApplications",
+					"raw": "https://localhost:3443/api/degreeCourseApplications/myApplications",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
+					"port": "3443",
 					"path": [
 						"api",
 						"degreeCourseApplications",
@@ -481,11 +487,12 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost/api/degreeCourseApplications",
+					"raw": "https://localhost:3443/api/degreeCourseApplications",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
+					"port": "3443",
 					"path": [
 						"api",
 						"degreeCourseApplications"

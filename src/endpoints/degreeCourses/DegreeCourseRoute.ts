@@ -27,7 +27,8 @@ router.get('/',async (req: Request, res: Response) => {
     }
 });
 
-router.get('/:degreeCourseID/degreeCourseApplications', isAuthenticated, isAdministrator, async (req: Request, res: Response) => {
+//nachgelagerte Suche
+router.get('/:degreeCourseID/degreeCourseApplications',isAuthenticated, isAdministrator, async (req: Request, res: Response) => {
     try{
         const course = await getDegreeCourseByID(req.params.degreeCourseID);
         const applications = await getApplicationsByDegreeCourseID(course._id);
@@ -63,7 +64,7 @@ router.get('/:degreeCourseID', async (req: Request, res: Response) => {
 router.post('/',isAuthenticated, isAdministrator, async (req: Request, res: Response) => {
     try{
         const degreeCourse = await createDegreeCourse(req.body);
-        res.status(200).json(degreeCourse);
+        res.status(201).json(degreeCourse);
     }
     catch(error){
         console.log(error);

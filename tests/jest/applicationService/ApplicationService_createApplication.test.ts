@@ -26,7 +26,6 @@ describe('createApplication',() => {
       name: "Orchideenzucht Bachelor",
       shortName: "OZ-BA"
     });
-     
   });
   it('create valid application', async () => {
     const application = await createApplication({

@@ -10,7 +10,7 @@ describe('createApplication',() => {
   let degreeCourse: IDegreeCourseDocument;
 
   beforeEach(async () => {
-    user = await createUser({
+      await createUser({
       userID: "juliusdittrich",
       firstName: "julius",
       lastName: "dittrich",
@@ -44,7 +44,7 @@ describe('createApplication',() => {
   })
 
   it('create application which already exists', async () => {
-    const application = await createApplication({
+      await createApplication({
       applicantUserID: "juliusdittrich",
       degreeCourseID: degreeCourse._id,
       targetPeriodYear: "2024",

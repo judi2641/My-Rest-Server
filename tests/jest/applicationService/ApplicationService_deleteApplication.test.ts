@@ -11,12 +11,12 @@ describe("deleteApplication", () => {
     let application: IApplication;
 
     beforeAll(async() => {
-        user = await createUser({
-                userID: "juliusdittrich",
-                firstName: "julius",
-                lastName: "dittrich",
-                password: "password",
-                isAdministrator: false
+        await createUser({
+            userID: "juliusdittrich",
+            firstName: "julius",
+            lastName: "dittrich",
+            password: "password",
+            isAdministrator: false
             });
 
         degreeCourse = await createDegreeCourse({

@@ -12,13 +12,13 @@ describe("updateApplication", () => {
     let application: IApplication;
 
     beforeEach(async () => {
-        user = await createUser({
-              userID: "juliusdittrich",
-              firstName: "julius",
-              lastName: "dittrich",
-              password: "password",
-              isAdministrator: false
-            });
+        await createUser({
+            userID: "juliusdittrich",
+            firstName: "julius",
+            lastName: "dittrich",
+            password: "password",
+            isAdministrator: false
+        });
         
         degreeCourse = await createDegreeCourse({
             universityName: "Beuth Hochschule für Technik Berlin",
@@ -54,7 +54,7 @@ describe("updateApplication", () => {
     });
 
     it("change application in a application which already exists", async () => {
-        const secondApplication = await createApplication({
+        await createApplication({
             applicantUserID: "juliusdittrich",
             degreeCourseID: degreeCourse._id.toString(),
             targetPeriodYear: "2026",

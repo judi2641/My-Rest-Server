@@ -1,7 +1,6 @@
-import { UserModel } from './UserModel';
+import { UserModel, IUserDocument } from './UserModel';
 import bcryptjs from 'bcryptjs';
 import { HttpError } from '../../errors/HttpError';
-import { IUserDocument } from './UserModel';
 
 export async function createUser(userData: {
     userID?: string;
@@ -75,7 +74,6 @@ export async function initAdministrator():Promise<void>{
     const admin = await UserModel.findOne({ isAdministrator: true });
     if(admin){
         console.log("at least one admin already exist");
-        return;
     }
     else{
         console.log("no admin exist. creating a default admin");

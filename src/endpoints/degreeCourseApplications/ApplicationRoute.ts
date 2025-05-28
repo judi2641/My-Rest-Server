@@ -61,7 +61,6 @@ router.post('/', isAuthenticated, async(req: Request, res: Response) => {
             req.body.applicantUserID = decodedToken.userID;
             application = await createApplication(req.body);
         }
-        console.log("application: " + application);
         res.status(201).json(application);
     }
     catch(error){

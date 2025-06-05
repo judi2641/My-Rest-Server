@@ -13,7 +13,7 @@ export function isAuthenticated(req: Request, res: Response, next: NextFunction)
     const authHeader = req.headers.authorization;
     if(authHeader){
         const token = authHeader.split(' ')[1];
-        const tokenKey = config.get('session.tokenKey') as string;
+        const tokenKey: string = config.get('session.tokenKey');
         try{
             const decoded = jwt.verify(token, tokenKey, { algorithms: ["HS256"] });
             (req as any).decodedToken = decoded;
